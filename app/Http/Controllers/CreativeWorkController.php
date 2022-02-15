@@ -17,7 +17,7 @@ class CreativeWorkController extends Controller
      */
     public function index(Request $request)
     {
-        $creative_works = CreativeWork::paginate(15);
+        $creative_works = CreativeWork::paginate(10);
         return $creative_works;
     }
 
