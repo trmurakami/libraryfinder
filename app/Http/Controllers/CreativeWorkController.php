@@ -17,7 +17,7 @@ class CreativeWorkController extends Controller
      */
     public function index(Request $request)
     {   
-        $creative_works = CreativeWork::where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10);
+        $creative_works = CreativeWork::where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10)->appends(request()->query());
         return $creative_works;
     }
 
