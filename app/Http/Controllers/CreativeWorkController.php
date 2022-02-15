@@ -16,8 +16,8 @@ class CreativeWorkController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $creative_works = CreativeWork::paginate(10);
+    {   
+        $creative_works = CreativeWork::where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10);
         return $creative_works;
     }
 

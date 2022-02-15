@@ -57,10 +57,7 @@
                   </li>
                 </template>
                 <li class="page-item active">
-                  <a
-                    class="page-link"                    
-                    >@{{ response.data.current_page }}</a
-                  >
+                  <a class="page-link">@{{ response.data.current_page }}</a>
                 </li>
                 <template v-if="response.data.next_page_url">
                   <li class="page-item">
@@ -130,7 +127,7 @@
             methods: {
                 getAllData() {
                     axios
-                        .get("api/creative_work?page=" + this.request.page)
+                        .get("api/creative_work?page=" + this.request.page + '&search=' + this.request.search)
                         .then((response) => {
                             this.response = response;
                         })
