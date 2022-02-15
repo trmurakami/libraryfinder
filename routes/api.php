@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CreativeWorkController;
+use App\Http\Controllers\ImportLattesXMLController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,8 @@ Route::prefix('creative_work')->group(
     }
 );
 
+Route::prefix('import')->group(
+    function () {
+        Route::post('lattesxml', [ImportLattesXMLController::class, 'parse']);
+    }
+);

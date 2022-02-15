@@ -14,7 +14,8 @@ class CreateCreativeWorksTable extends Migration
     public function up()
     {
         Schema::create('creative_works', function (Blueprint $table) {
-            $table->id();
+            $table->id();            
+            $table->string('doi');
             $table->string('name');
             $table->timestamps();
         });

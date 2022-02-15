@@ -10,7 +10,8 @@ class CreativeWork extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'doi'
     ];
 
 }
