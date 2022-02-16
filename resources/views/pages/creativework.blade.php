@@ -10,6 +10,8 @@
 
 @section('content')
 
+<h1>{{ $record->name }}</h1>
+
 {{ $record }}
 
 @endsection
