@@ -48,7 +48,9 @@ class ImportLattesXMLController extends Controller
                         [
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
                             'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
-                            'type' => 'Trabalho apresentado em evento'
+                            'record_source' => 'Currículo Lattes',
+                            'type' => 'Trabalho apresentado em evento',
+                            'type_schema_org' => 'ScholarlyArticle'
                         ]
                     );
                 }
@@ -63,7 +65,9 @@ class ImportLattesXMLController extends Controller
                         [
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
                             'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
-                            'type' => 'Artigo publicado'
+                            'record_source' => 'Currículo Lattes',
+                            'type' => 'Artigo publicado',
+                            'type_schema_org' => 'ScholarlyArticle'
                         ]
                     );
                 }

@@ -16,7 +16,10 @@ class CreativeWorkFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'doi' => '10.11111/testedoi',
-            'type' => 'Artigo' 
+            'record_source' => 'Base Lattes',
+            'type' => 'Artigo',
+            'type_schema_org' => 'ScholarlyArticle',
+
         ];
     }
 }
