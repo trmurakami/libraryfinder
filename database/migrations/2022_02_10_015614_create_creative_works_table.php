@@ -17,6 +17,7 @@ class CreateCreativeWorksTable extends Migration
             $table->id();            
             $table->string('doi');
             $table->string('name');
+            $table->string('type');
             $table->timestamps();
         });
     }

@@ -15,7 +15,8 @@ class CreativeWorkFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'doi' => '10.11111/testedoi'
+            'doi' => '10.11111/testedoi',
+            'type' => 'Artigo' 
         ];
     }
 }

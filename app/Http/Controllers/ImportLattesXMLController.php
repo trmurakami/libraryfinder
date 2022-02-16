@@ -47,7 +47,8 @@ class ImportLattesXMLController extends Controller
                     $id = DB::table('creative_works')->insertGetId(
                         [
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
-                            'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"]
+                            'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
+                            'type' => 'Trabalho apresentado em evento'
                         ]
                     );
                 }
@@ -61,7 +62,8 @@ class ImportLattesXMLController extends Controller
                     $id = DB::table('creative_works')->insertGetId(
                         [
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
-                            'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"])
+                            'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
+                            'type' => 'Artigo publicado'
                         ]
                     );
                 }
