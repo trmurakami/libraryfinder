@@ -32,3 +32,9 @@ Route::prefix('import')->group(
         Route::post('lattesxml', [ImportLattesXMLController::class, 'parse']);
     }
 );
+
+Route::prefix('facets')->group(
+    function () {
+        Route::get('simple', [CreativeWorkController::class, 'facetSimple']);
+    }
+);

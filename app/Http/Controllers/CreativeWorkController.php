@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCreativeWorkRequest;
 use App\Http\Requests\UpdateCreativeWorkRequest;
 use App\Models\CreativeWork;
@@ -19,6 +20,21 @@ class CreativeWorkController extends Controller
     {   
         $creative_works = CreativeWork::where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10)->appends(request()->query());
         return $creative_works;
+    }
+
+    /**
+     * Facet simple field.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function facetSimple(Request $request)
+    {   
+        $facets = DB::table('creative_works')
+                 ->select($request->field, DB::raw('count(*) as total'))
+                 ->where('name', 'LIKE',  '%' . $request->input('search') . '%')
+                 ->groupBy($request->field)
+                 ->get();
+        return $facets;
     }
 
     /**
