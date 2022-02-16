@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 use App\Models\CreativeWork;
+use App\Http\Controllers\CreativeWorkController;
 
 
 /*
@@ -24,10 +26,11 @@ Route::get('/search', function () {
     return view('pages.search');
 });
 
-// Route::get('/search', function () {
-//     $creative_works = CreativeWork::get();
+// Route::get('/creativework/{id}', function ($id) {
+//     return view('pages.creativework', compact('id'));
+// })->where('id', '[0-9]+');
 
-//     return view('search', [
-//         'creative_works' => $creative_works
-//     ]);
-// });
+
+// Route::get('creativework/{id}','App\Http\Controllers\CreativeWorkController@view')->where('id', '[0-9]+');
+
+Route::get('/creativework/{id}', [CreativeWorkController::class, 'view'])->name('record.view');

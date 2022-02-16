@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('creative_work')->group(
     function () {
         Route::get('', [CreativeWorkController::class, 'index']);
+        Route::get('{id}', [CreativeWorkController::class, 'show']);
     }
 );
 

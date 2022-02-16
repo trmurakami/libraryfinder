@@ -64,9 +64,37 @@ class CreativeWorkController extends Controller
      * @param  \App\Models\CreativeWork  $creativeWork
      * @return \Illuminate\Http\Response
      */
-    public function show(CreativeWork $creativeWork)
+    public function show($id)
     {
-        //
+        $record = CreativeWork::find($id);
+
+        if (is_null($record)) {
+            return response()->json('', 204);
+        }
+
+        return response()->json($record);
+  
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\CreativeWork  $creativeWork
+     * @return \Illuminate\Http\Response
+     */
+    public function view(Request $request)
+    {
+
+        $record = CreativeWork::findOrFail(request('id'));
+
+        return view('pages.creativework', compact('record'));
+
+        // $record = CreativeWork::find($request->id);
+        // if (is_null($record)) {
+        //     return response()->json('', 204);
+        // }
+        // return view('pages.creativework')->with('record', $record);
+  
     }
 
     /**
