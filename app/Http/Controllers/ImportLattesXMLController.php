@@ -39,8 +39,8 @@ class ImportLattesXMLController extends Controller
             // );
 
             if (isset($cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'TRABALHOS-EM-EVENTOS'})) {
-                $trabalhosEmEventosArray = $cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'TRABALHOS-EM-EVENTOS'}->{'TRABALHO-EM-EVENTOS'};
-                foreach ($trabalhosEmEventosArray as $obra) {
+                $records = $cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'TRABALHOS-EM-EVENTOS'}->{'TRABALHO-EM-EVENTOS'};
+                foreach ($records as $obra) {
                     $obra = get_object_vars($obra);
                     $dadosBasicosDoTrabalho = get_object_vars($obra["DADOS-BASICOS-DO-TRABALHO"]);
                     $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-TRABALHO"]);
@@ -48,6 +48,20 @@ class ImportLattesXMLController extends Controller
                         [
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
                             'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"]
+                        ]
+                    );
+                }
+            }
+            if (isset($cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'ARTIGOS-PUBLICADOS'})) {
+                $records = $cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'ARTIGOS-PUBLICADOS'}->{'ARTIGO-PUBLICADO'};
+                foreach ($records as $obra) {
+                    $obra = get_object_vars($obra);
+                    $dadosBasicosDoTrabalho = get_object_vars($obra["DADOS-BASICOS-DO-ARTIGO"]);
+                    $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-ARTIGO"]);
+                    $id = DB::table('creative_works')->insertGetId(
+                        [
+                            'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
+                            'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"])
                         ]
                     );
                 }
