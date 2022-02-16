@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CreativeWorkController;
 use App\Http\Controllers\ImportLattesXMLController;
+use App\Http\Controllers\PersonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,13 @@ Route::prefix('creative_work')->group(
     function () {
         Route::get('', [CreativeWorkController::class, 'index']);
         Route::get('{id}', [CreativeWorkController::class, 'show']);
+    }
+);
+
+Route::prefix('person')->group(
+    function () {
+        Route::get('', [PersonController::class, 'index']);
+        Route::get('{id}', [PersonController::class, 'show']);
     }
 );
 

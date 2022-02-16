@@ -12,7 +12,7 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $people = Person::where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10)->appends(request()->query());
         return $people;
@@ -45,9 +45,15 @@ class PersonController extends Controller
      * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Person $person)
+    public function show(Person $id)
     {
-        //
+        $person = Person::find($id);
+
+        if (is_null($person)) {
+            return response()->json('', 204);
+        }
+
+        return response()->json($person);
     }
 
     /**
