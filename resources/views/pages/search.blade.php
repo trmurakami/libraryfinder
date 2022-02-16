@@ -167,7 +167,7 @@
                 },
                 facetSimple(field) {
                     axios
-                        .get("api/facets/simple?field=" + field)
+                        .get("api/facets/simple?field=" + field + '&search=' + this.request.search)
                         .then((response) => {
                             this.facetType = response.data;
                         })
