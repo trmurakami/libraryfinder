@@ -85,7 +85,7 @@ class CreativeWorkController extends Controller
     public function view(Request $request)
     {
 
-        $record = CreativeWork::findOrFail(request('id'));
+        $record = CreativeWork::with('authors')->findOrFail(request('id'));
 
         return view('pages.creativework', compact('record'));
 
