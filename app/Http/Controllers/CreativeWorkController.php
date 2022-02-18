@@ -18,7 +18,7 @@ class CreativeWorkController extends Controller
      */
     public function index(Request $request)
     {   
-        $creative_works = CreativeWork::where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10)->appends(request()->query());
+        $creative_works = CreativeWork::with('authors')->where('name', 'LIKE',  '%' . $request->input('search') . '%')->paginate(10)->appends(request()->query());
         return $creative_works;
     }
 
@@ -66,7 +66,7 @@ class CreativeWorkController extends Controller
      */
     public function show($id)
     {
-        $record = CreativeWork::find($id);
+        $record = CreativeWork::with('authors')->find($id);
 
         if (is_null($record)) {
             return response()->json('', 204);

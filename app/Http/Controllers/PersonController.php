@@ -47,7 +47,7 @@ class PersonController extends Controller
      */
     public function show(Person $id)
     {
-        $person = Person::find($id);
+        $person = Person::with('works')->find($id);
 
         if (is_null($person)) {
             return response()->json('', 204);

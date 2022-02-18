@@ -7,9 +7,35 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 //use App\Models\Curriculum;
 use App\Models\CreativeWork;
+use App\Models\Person;
 
 class ImportLattesXMLController extends Controller
 {
+
+    function processAuthorsLattes($authors_array, $recordID)
+    {
+        foreach ($authors_array as $author) {
+            $author = get_object_vars($author);
+            // $array_result['doc']['author'][$i]['person']['name'] = $autor['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+            // $array_result['doc']['author'][$i]['nomeParaCitacao'] = $autor['@attributes']['NOME-PARA-CITACAO'];
+            // $array_result['doc']['author'][$i]['ordemDeAutoria'] = $autor['@attributes']['ORDEM-DE-AUTORIA'];
+            // if (isset($autor['@attributes']['NRO-ID-CNPQ'])) {
+            //     $array_result['doc']['author'][$i]['nroIdCnpq'] = $autor['@attributes']['NRO-ID-CNPQ'];
+            // }
+
+            $id_author = DB::table('people')->insertGetId(
+                [
+                    'name' => $author['@attributes']['NOME-COMPLETO-DO-AUTOR']
+                ]
+            );
+
+            $record = CreativeWork::find($recordID);
+            $author = Person::find($id_author);
+            $record->authors()->attach($author, ['function' => 'Author']);
+
+        }
+    }
+
     public function parse(Request $request)
     {
         if ($request->file) {
@@ -53,6 +79,9 @@ class ImportLattesXMLController extends Controller
                             'type_schema_org' => 'ScholarlyArticle'
                         ]
                     );
+                    if (!empty($obra["AUTORES"])) {
+                        $this->processAuthorsLattes($obra["AUTORES"], $id);
+                    }
                 }
             }
             if (isset($cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'ARTIGOS-PUBLICADOS'})) {
@@ -70,6 +99,9 @@ class ImportLattesXMLController extends Controller
                             'type_schema_org' => 'ScholarlyArticle'
                         ]
                     );
+                    if (!empty($obra["AUTORES"])) {
+                        $this->processAuthorsLattes($obra["AUTORES"], $id);
+                    }
                 }
             }
             return response()->json(['success' => 'Arquivo XML processado com sucesso'], 200);
@@ -77,4 +109,7 @@ class ImportLattesXMLController extends Controller
 
         return response()->json(['error' => 'Não foi enviado nenhum Arquivo XML'], 500);
     }
+
+
+
 }

@@ -13,4 +13,12 @@ class Person extends Model
         'name'
     ];
 
+    /**
+     * Creative Works associated to this person.
+    */
+    public function works()
+    {
+        return $this->belongsToMany(CreativeWork::class, 'creative_work_person');
+    }
+
 }

@@ -14,4 +14,12 @@ class CreativeWork extends Model
         'doi'
     ];
 
+    /**
+     * Creative Works associated to this person.
+    */
+    public function authors()
+    {
+        return $this->belongsToMany(Person::class, 'creative_work_person');
+    }
+
 }
