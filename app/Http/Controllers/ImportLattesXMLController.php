@@ -76,7 +76,8 @@ class ImportLattesXMLController extends Controller
                             'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Trabalho apresentado em evento',
-                            'type_schema_org' => 'ScholarlyArticle'
+                            'type_schema_org' => 'ScholarlyArticle',
+                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-TRABALHO"]
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {
@@ -96,7 +97,8 @@ class ImportLattesXMLController extends Controller
                             'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Artigo publicado',
-                            'type_schema_org' => 'ScholarlyArticle'
+                            'type_schema_org' => 'ScholarlyArticle',
+                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"]
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {
