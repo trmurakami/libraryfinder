@@ -17,12 +17,17 @@ class CreativeWorkController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
-        $creative_works = CreativeWork::with('authors')
-                                        ->where('name', 'LIKE',  '%' . $request->input('search') . '%')
-                                        ->orderBy('datePublished', 'desc')
-                                        ->paginate(10)
-                                        ->appends(request()->query());
+    {
+        if (!$request->per_page) {
+            $request->per_page = 10;
+        }
+
+        $query = CreativeWork::with('authors')->where('name', 'LIKE',  '%' . $request->input('search') . '%');
+
+        if ($request->type) {
+            $query->where('type', $request->type);
+        }
+        $creative_works = $query->orderBy('datePublished', 'desc')->paginate($request->per_page)->appends(request()->query());
         return $creative_works;
     }
 
@@ -33,11 +38,12 @@ class CreativeWorkController extends Controller
      */
     public function facetSimple(Request $request)
     {   
-        $facets = DB::table('creative_works')
-                 ->select($request->field, DB::raw('count(*) as total'))
-                 ->where('name', 'LIKE',  '%' . $request->input('search') . '%')
-                 ->groupBy($request->field)
-                 ->get();
+        $query = DB::table('creative_works')->select($request->field, DB::raw('count(*) as total'));
+        $query->where('name', 'LIKE',  '%' . $request->input('search') . '%');
+        if ($request->type) {
+            $query->where('type', $request->type);
+        }
+        $facets = $query->groupBy($request->field)->get();
         return $facets;
     }
 

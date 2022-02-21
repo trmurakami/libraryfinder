@@ -20,6 +20,10 @@
             $_REQUEST['search'] = '';
         }
 
+        if (!isset($_REQUEST['type'])) {
+            $_REQUEST['type'] = '';
+        }
+
 
     ?>
 
@@ -97,6 +101,7 @@
                                     <h5 class="card-title"><a :href="'creativework/' + record.id ">@{{ record.name }} (@{{ record.datePublished }})</a></h5>
                                     <p class="card-text">@{{ record.type }}</p>
                                     <p class="card-text"><small class="text-muted">@{{ record.doi }}</small></p>
+                                    <p class="card-text">@{{ record.authors }}</p>
                                 </div>
                                 </div>
                             </div>
@@ -107,18 +112,12 @@
                 <div class="col-4">
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center" v-for="facet in facetType" :key="facet.names">
-                            @{{ facet.type }}
+                            <a :href="currentURL + '&type=' + facet.type">@{{ facet.type }}</a>
                             <span class="badge bg-primary rounded-pill">@{{ facet.total }}</span>
                         </li>
                     </ul>
                 </div>
-            </div>
-
-
-
-            
-
-            
+            </div>            
             
         </div>
     </div>
@@ -129,11 +128,13 @@
     <script>
         var app = new Vue({
             el: '#search',
-            data: {                
+            data: {
+                currentURL: null,                
                 response: null,
                 request:{
                     page: <?php echo "'".$_REQUEST['page']."'" ?>,
-                    search: <?php echo "'".$_REQUEST['search']."'" ?>
+                    search: <?php echo "'".$_REQUEST['search']."'" ?>,
+                    type: <?php echo "'".$_REQUEST['type']."'" ?>
                 },
                 facetType: null,
                 errored: false
@@ -141,11 +142,16 @@
             mounted: function () {
                 this.getAllData();
                 this.facetSimple('type');
+                if (window.location.href.includes("\?")) {
+                    this.currentURL = window.location.href;
+                } else {
+                    this.currentURL = window.location.href + '?';
+                }                
             },
             methods: {
                 getAllData() {
                     axios
-                        .get("api/creative_work?page=" + this.request.page + '&search=' + this.request.search)
+                        .get("api/creative_work?page=" + this.request.page + '&search=' + this.request.search + (this.request.type ? '&type=' + this.request.type : ''))
                         .then((response) => {
                             this.response = response;
                         })
@@ -167,7 +173,7 @@
                 },
                 facetSimple(field) {
                     axios
-                        .get("api/facets/simple?field=" + field + '&search=' + this.request.search)
+                        .get("api/facets/simple?field=" + field + '&search=' + this.request.search + (this.request.type ? '&type=' + this.request.type : ''))
                         .then((response) => {
                             this.facetType = response.data;
                         })
