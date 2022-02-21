@@ -89,4 +89,17 @@ class PersonController extends Controller
     {
         //
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchByName(String $name)
+    {
+        $people = Person::where('name', 'LIKE',  '%' . $name . '%')->get();
+        return json_encode($people, true);
+    }
+
+
 }

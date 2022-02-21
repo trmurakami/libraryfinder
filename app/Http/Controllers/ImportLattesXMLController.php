@@ -8,6 +8,7 @@ use Carbon\Carbon;
 //use App\Models\Curriculum;
 use App\Models\CreativeWork;
 use App\Models\Person;
+use App\Http\Controllers\PersonController;
 
 class ImportLattesXMLController extends Controller
 {
@@ -16,18 +17,25 @@ class ImportLattesXMLController extends Controller
     {
         foreach ($authors_array as $author) {
             $author = get_object_vars($author);
+            $person = new PersonController;
+            $result_person_query = $person->searchByName($author['@attributes']['NOME-COMPLETO-DO-AUTOR']);
+            if (count(json_decode($result_person_query)) == 1) {
+                $result_array = json_decode($result_person_query, true);                
+                $id_author = $result_array[0]['id'];
+            } else {
+                $id_author = DB::table('people')->insertGetId(
+                    [
+                        'name' => $author['@attributes']['NOME-COMPLETO-DO-AUTOR']
+                    ]
+                );
+            }
+            
             // $array_result['doc']['author'][$i]['person']['name'] = $autor['@attributes']['NOME-COMPLETO-DO-AUTOR'];
             // $array_result['doc']['author'][$i]['nomeParaCitacao'] = $autor['@attributes']['NOME-PARA-CITACAO'];
             // $array_result['doc']['author'][$i]['ordemDeAutoria'] = $autor['@attributes']['ORDEM-DE-AUTORIA'];
             // if (isset($autor['@attributes']['NRO-ID-CNPQ'])) {
             //     $array_result['doc']['author'][$i]['nroIdCnpq'] = $autor['@attributes']['NRO-ID-CNPQ'];
             // }
-
-            $id_author = DB::table('people')->insertGetId(
-                [
-                    'name' => $author['@attributes']['NOME-COMPLETO-DO-AUTOR']
-                ]
-            );
 
             $record = CreativeWork::find($recordID);
             $author = Person::find($id_author);
@@ -40,6 +48,16 @@ class ImportLattesXMLController extends Controller
     {
         if ($request->file) {
             $cv = simplexml_load_file($request->file);
+            $person = new PersonController;
+            $result_person_query = $person->searchByName((string)$cv->{'DADOS-GERAIS'}->attributes()->{'NOME-COMPLETO'});
+            if (count(json_decode($result_person_query)) == 0) {
+                $id_author = DB::table('people')->insertGetId(
+                    [
+                        'name' => (string)$cv->{'DADOS-GERAIS'}->attributes()->{'NOME-COMPLETO'}
+                    ]
+                );
+            }
+
             // $existing_id = Curriculum::find((string)$cv->attributes()->{'NUMERO-IDENTIFICADOR'});
 
             // $curriculum = Curriculum::insertGetId(
