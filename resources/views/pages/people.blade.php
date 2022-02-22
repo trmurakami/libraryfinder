@@ -106,13 +106,7 @@ if (!isset($_REQUEST['inLanguage'])) {
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a :href="'creativework/' + record.id ">@{{ record.name }} (@{{ record.datePublished }})</a></h5>
-                                    <p class="card-text">@{{ record.type }}</p>
-                                    <p class="card-text"><small class="text-muted">@{{ record.doi }}</small></p>
-                                    <!-- <p class="card-text">@{{ record.authors }}</p> -->
-                                    <div v-for="author in record.authors" :key="author.id">
-                                        <small class="text-muted">@{{ author.name }}</small>
-                                    </div>
+                                    <h5 class="card-title"><a :href="'person/' + record.id ">@{{ record.name }}</a></h5>
                                 </div>
                             </div>
                         </div>
@@ -122,59 +116,6 @@ if (!isset($_REQUEST['inLanguage'])) {
             </div>
             <div class="col-4">
 
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Por tipo
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="type in facets.type" :key="type.names">
-                                        <a :href="currentURL + '&type=' + type.type">@{{ type.type }}</a>
-                                        <span class="badge bg-primary rounded-pill">@{{ type.total }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Idioma
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="language in facets.inLanguage" :key="language.names">
-                                        <a :href="currentURL + '&inLanguage=' + language.inLanguage">@{{ language.inLanguage }}</a>
-                                        <span class="badge bg-primary rounded-pill">@{{ language.total }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                País do evento
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="countryOfOrigin in facets.countryOfOrigin" :key="countryOfOrigin.countryOfOrigin">
-                                        <a :href="currentURL + '&countryOfOrigin=' + countryOfOrigin.countryOfOrigin">@{{ countryOfOrigin.countryOfOrigin }}</a>
-                                        <span class="badge bg-primary rounded-pill">@{{ countryOfOrigin.total }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -197,11 +138,8 @@ if (!isset($_REQUEST['inLanguage'])) {
             },
             response: null,
             request: {
-                countryOfOrigin: <?php echo "'" . $_REQUEST['countryOfOrigin'] . "'" ?>,
-                inLanguage: <?php echo "'" . $_REQUEST['inLanguage'] . "'" ?>,
                 page: <?php echo "'" . $_REQUEST['page'] . "'" ?>,
-                search: <?php echo "'" . $_REQUEST['search'] . "'" ?>,
-                type: <?php echo "'" . $_REQUEST['type'] . "'" ?>
+                search: <?php echo "'" . $_REQUEST['search'] . "'" ?>
             }
         },
         mounted: function() {
@@ -218,13 +156,10 @@ if (!isset($_REQUEST['inLanguage'])) {
         methods: {
             getAllData() {
                 axios
-                    .get("api/creative_work?page=" + 
+                    .get("api/people?page=" + 
                             this.request.page + 
                             '&search=' + 
-                            this.request.search + 
-                            (this.request.type ? '&type=' + this.request.type : '') +
-                            (this.request.countryOfOrigin ? '&countryOfOrigin=' + this.request.countryOfOrigin : '') +
-                            (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '')
+                            this.request.search
                         )
                     .then((response) => {
                         this.response = response;

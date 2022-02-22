@@ -26,6 +26,10 @@ Route::get('/search', function () {
     return view('pages.search');
 });
 
+Route::get('/people', function () {
+    return view('pages.people');
+});
+
 // Route::get('/creativework/{id}', function ($id) {
 //     return view('pages.creativework', compact('id'));
 // })->where('id', '[0-9]+');

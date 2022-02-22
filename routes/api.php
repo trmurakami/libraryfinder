@@ -31,8 +31,13 @@ Route::prefix('creative_work')->group(
 
 Route::prefix('person')->group(
     function () {
-        Route::get('', [PersonController::class, 'index']);
         Route::get('{id}', [PersonController::class, 'show']);
+    }
+);
+
+Route::prefix('people')->group(
+    function () {
+        Route::get('', [PersonController::class, 'index']);
     }
 );
 
