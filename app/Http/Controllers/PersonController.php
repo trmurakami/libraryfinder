@@ -65,7 +65,7 @@ class PersonController extends Controller
     public function view(Request $request)
     {
 
-        $record = Person::findOrFail(request('id'));
+        $record = Person::with('works')->findOrFail(request('id'));
 
         return view('pages.person', compact('record'));
   
