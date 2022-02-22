@@ -22,7 +22,8 @@ class CreateCreativeWorksTable extends Migration
             $table->string('name');
             $table->string('record_source');
             $table->string('type');
-            $table->string('type_schema_org');      
+            $table->string('type_schema_org');
+            $table->string('url');
             $table->timestamps();
         });
     }

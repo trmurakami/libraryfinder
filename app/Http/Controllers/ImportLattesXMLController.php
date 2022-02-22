@@ -53,7 +53,9 @@ class ImportLattesXMLController extends Controller
             if (count(json_decode($result_person_query)) == 0) {
                 $id_author = DB::table('people')->insertGetId(
                     [
-                        'name' => (string)$cv->{'DADOS-GERAIS'}->attributes()->{'NOME-COMPLETO'}
+                        'name' => (string)$cv->{'DADOS-GERAIS'}->attributes()->{'NOME-COMPLETO'},
+                        'lattesID' => (string)$cv->attributes()->{'NUMERO-IDENTIFICADOR'},
+                        'orcidID' => (string)$cv->{'DADOS-GERAIS'}->attributes()->{'ORCID-ID'}
                     ]
                 );
             }
@@ -97,7 +99,8 @@ class ImportLattesXMLController extends Controller
                             'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Trabalho apresentado em evento',
-                            'type_schema_org' => 'ScholarlyArticle'                            
+                            'type_schema_org' => 'ScholarlyArticle',
+                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]                       
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {
@@ -120,7 +123,8 @@ class ImportLattesXMLController extends Controller
                             'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Artigo publicado',
-                            'type_schema_org' => 'ScholarlyArticle'
+                            'type_schema_org' => 'ScholarlyArticle',
+                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
                             
                         ]
                     );

@@ -10,8 +10,14 @@ class CreativeWork extends Model
     use HasFactory;
 
     protected $fillable = [
+        'countryOfOrigin',
+        'datePublished',
+        'doi',
+        'inLanguage',
         'name',
-        'doi'
+        'type',
+        'type_schema_org',
+        'url'
     ];
 
     /**
