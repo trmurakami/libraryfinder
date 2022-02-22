@@ -102,7 +102,9 @@ if (!isset($_REQUEST['inLanguage'])) {
                     <div class="card mb-3">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="">
+                                <a class="page-link" @click="getCover(record)">Capa</a>
+                                <img :src="coverimage" alt="Cover" class="img-fluid rounded-start" width="156" height="230" itemprop="image" />
+
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -190,6 +192,7 @@ if (!isset($_REQUEST['inLanguage'])) {
     var app = new Vue({
         el: '#search',
         data: {
+            coverimage: null,
             currentURL: null,
             errored: false,
             facets: {
@@ -276,6 +279,7 @@ if (!isset($_REQUEST['inLanguage'])) {
                 axios
                     .get("api/cover/?id=" + record.id + '&title=' + record.name + '&datePublished=' + record.datePublished + '&publisher=' + ((record.publisher) ? record.publisher[0].name : '') + '&creators=' + authors)
                     .then((response) => {
+                        console.log(response);
                         this.coverimage = response.data;
                     })
                     .catch(function (error) {
