@@ -15,7 +15,7 @@ class CreateCreativeWorksTable extends Migration
     {
         Schema::create('creative_works', function (Blueprint $table) {
             $table->id();
-            $table->string('countryOfOrigin');
+            $table->string('countryOfOrigin')->nullable();
             $table->string('datePublished'); 
             $table->string('doi');
             $table->string('inLanguage');

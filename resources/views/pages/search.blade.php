@@ -110,6 +110,9 @@ if (!isset($_REQUEST['inLanguage'])) {
                                     <p class="card-text">@{{ record.type }}</p>
                                     <p class="card-text"><small class="text-muted">@{{ record.doi }}</small></p>
                                     <p class="card-text">@{{ record.authors }}</p>
+                                    <div v-for="author in record.authors" :key="author.id">
+                                        @{{ author.name }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +160,7 @@ if (!isset($_REQUEST['inLanguage'])) {
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                País
+                                País do evento
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
