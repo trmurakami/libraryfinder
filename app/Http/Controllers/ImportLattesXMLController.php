@@ -116,7 +116,7 @@ class ImportLattesXMLController extends Controller
                     $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-ARTIGO"]);
                     $id = DB::table('creative_works')->insertGetId(
                         [
-                            //'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DE-PUBLICACAO"],
+                            'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DE-PUBLICACAO"],
                             'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"],
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
                             'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],

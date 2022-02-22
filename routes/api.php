@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreativeWorkController;
 use App\Http\Controllers\ImportLattesXMLController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\CoverController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,5 @@ Route::prefix('facets')->group(
         Route::get('simple', [CreativeWorkController::class, 'facetSimple']);
     }
 );
+
+Route::get('cover', [CoverController::class, 'show']);

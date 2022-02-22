@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c61ff82cbf0142a401a48a8161e1595a",
+    "content-hash": "9d4c31d7b2f03c2be2c16c1629ad1d8d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1658,6 +1658,62 @@
                 }
             ],
             "time": "2021-11-21T11:48:40+00:00"
+        },
+        {
+            "name": "medlib/cover",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/medlib-v2/cover.git",
+                "reference": "fbe52ca83721fee6057fb80108d82f3acf4927b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/medlib-v2/cover/zipball/fbe52ca83721fee6057fb80108d82f3acf4927b8",
+                "reference": "fbe52ca83721fee6057fb80108d82f3acf4927b8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-imagick": "*",
+                "php": ">=5.5.9"
+            },
+            "replace": {
+                "medlib/cover": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Medlib\\BookCover\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "examples/"
+            ],
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Medlib Team",
+                    "email": "noreply-medlib@gmail.com"
+                }
+            ],
+            "description": "Medlib is a searche Library",
+            "homepage": "https://www.medlib.fr",
+            "keywords": [
+                "bibliothèque",
+                "finder books",
+                "library",
+                "search books",
+                "yaz",
+                "z3950"
+            ],
+            "support": {
+                "issues": "https://github.com/medlib-v2/cover/issues",
+                "source": "https://github.com/medlib-v2/cover/tree/v1.0"
+            },
+            "time": "2017-02-04T19:09:59+00:00"
         },
         {
             "name": "monolog/monolog",

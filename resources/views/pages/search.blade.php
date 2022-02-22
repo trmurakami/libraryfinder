@@ -264,6 +264,24 @@ if (!isset($_REQUEST['inLanguage'])) {
                         console.log(error);
                         this.errored = true;
                     });
+            },
+            getCover(record) {
+                if (record.author) {
+                    var autArray = Array ();
+                    Object.values(record.author).forEach(val => {
+                    autArray.push(val.name);
+                    });
+                    var authors = autArray.join(',');
+                }
+                axios
+                    .get("api/cover/?id=" + record.id + '&title=' + record.name + '&datePublished=' + record.datePublished + '&publisher=' + ((record.publisher) ? record.publisher[0].name : '') + '&creators=' + authors)
+                    .then((response) => {
+                        this.coverimage = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.errored = true;
+                    });
             }
         }
     })
