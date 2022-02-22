@@ -90,12 +90,14 @@ class ImportLattesXMLController extends Controller
                     $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-TRABALHO"]);
                     $id = DB::table('creative_works')->insertGetId(
                         [
+                            'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DO-EVENTO"],
+                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-TRABALHO"],
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
+                            'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
                             'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Trabalho apresentado em evento',
-                            'type_schema_org' => 'ScholarlyArticle',
-                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-TRABALHO"]
+                            'type_schema_org' => 'ScholarlyArticle'                            
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {
@@ -111,12 +113,15 @@ class ImportLattesXMLController extends Controller
                     $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-ARTIGO"]);
                     $id = DB::table('creative_works')->insertGetId(
                         [
+                            'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DE-PUBLICACAO"],
+                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"],
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
+                            'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
                             'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Artigo publicado',
-                            'type_schema_org' => 'ScholarlyArticle',
-                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"]
+                            'type_schema_org' => 'ScholarlyArticle'
+                            
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {

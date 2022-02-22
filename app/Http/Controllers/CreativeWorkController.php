@@ -27,6 +27,13 @@ class CreativeWorkController extends Controller
         if ($request->type) {
             $query->where('type', $request->type);
         }
+        if ($request->countryOfOrigin) {
+            $query->where('countryOfOrigin', $request->countryOfOrigin);
+        }
+        if ($request->inLanguage) {
+            $query->where('inLanguage', $request->inLanguage);
+        }
+
         $creative_works = $query->orderBy('datePublished', 'desc')->paginate($request->per_page)->appends(request()->query());
         return $creative_works;
     }
@@ -40,10 +47,19 @@ class CreativeWorkController extends Controller
     {   
         $query = DB::table('creative_works')->select($request->field, DB::raw('count(*) as total'));
         $query->where('name', 'LIKE',  '%' . $request->input('search') . '%');
+
         if ($request->type) {
             $query->where('type', $request->type);
         }
-        $facets = $query->groupBy($request->field)->get();
+        if ($request->countryOfOrigin) {
+            $query->where('countryOfOrigin', $request->countryOfOrigin);
+        }
+
+        if ($request->inLanguage) {
+            $query->where('inLanguage', $request->inLanguage);
+        }
+
+        $facets = $query->groupBy($request->field)->orderBy('total', 'desc')->get();
         return $facets;
     }
 

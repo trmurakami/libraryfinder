@@ -14,13 +14,15 @@ class CreateCreativeWorksTable extends Migration
     public function up()
     {
         Schema::create('creative_works', function (Blueprint $table) {
-            $table->id();         
-            $table->string('datePublished');   
+            $table->id();
+            $table->string('countryOfOrigin');
+            $table->string('datePublished'); 
             $table->string('doi');
+            $table->string('inLanguage');
             $table->string('name');
             $table->string('record_source');
             $table->string('type');
-            $table->string('type_schema_org');            
+            $table->string('type_schema_org');      
             $table->timestamps();
         });
     }
