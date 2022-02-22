@@ -34,7 +34,7 @@
             methods: {
                 getRecordData() {
                     axios
-                        .get("api/creative_work/" + this.request.id)
+                        .get("api/person/" + this.request.id)
                         .then((response) => {
                             this.response = response;
                         })

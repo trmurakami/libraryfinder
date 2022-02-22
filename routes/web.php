@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Models\CreativeWork;
 use App\Http\Controllers\CreativeWorkController;
+use App\Http\Controllers\PersonController;
 
 
 /*
@@ -38,3 +39,5 @@ Route::get('/people', function () {
 // Route::get('creativework/{id}','App\Http\Controllers\CreativeWorkController@view')->where('id', '[0-9]+');
 
 Route::get('/creativework/{id}', [CreativeWorkController::class, 'view'])->name('record.view');
+
+Route::get('/person/{id}', [PersonController::class, 'view'])->name('record.view');

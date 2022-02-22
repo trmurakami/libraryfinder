@@ -57,6 +57,21 @@ class PersonController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Person  $person
+     * @return \Illuminate\Http\Response
+     */
+    public function view(Request $request)
+    {
+
+        $record = Person::findOrFail(request('id'));
+
+        return view('pages.person', compact('record'));
+  
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Person  $person
