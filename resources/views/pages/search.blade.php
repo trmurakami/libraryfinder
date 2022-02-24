@@ -114,7 +114,7 @@ if (!isset($_REQUEST['inLanguage'])) {
                                     <p class="card-text"><small class="text-muted">@{{ record.url }}</small></p>
                                     <!-- <p class="card-text">@{{ record.authors }}</p> -->
                                     <div v-for="author in record.authors" :key="author.id">
-                                        <small class="text-muted">@{{ author.name }} <template v-if='author.lattesID'><a :href="'https://lattes.cnpq.br/' + author.lattesID">Lattes</a></template>
+                                        <small class="text-muted"><a :href="'person/' + author.id">@{{ author.name }}</a> <template v-if='author.lattesID'><a :href="'https://lattes.cnpq.br/' + author.lattesID">Lattes</a></template>
                                             <template v-if='author.orcidID'><a :href="author.orcidID">ORCID</a></template></small>
                                     </div>
                                 </div>
