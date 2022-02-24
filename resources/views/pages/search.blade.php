@@ -110,7 +110,7 @@ if (!isset($_REQUEST['inLanguage'])) {
                                 <div class="card-body">
                                     <h5 class="card-title"><a :href="'creativework/' + record.id ">@{{ record.name }} (@{{ record.datePublished }})</a></h5>
                                     <p class="card-text">@{{ record.type }}</p>
-                                    <p class="card-text"><small class="text-muted">@{{ record.doi }}</small></p>
+                                    <p class="card-text"><small class="text-muted"><a :href="'https://doi.org/' + record.doi">@{{ record.doi }}</a></small></p>
                                     <p class="card-text"><small class="text-muted">@{{ record.url }}</small></p>
                                     <!-- <p class="card-text">@{{ record.authors }}</p> -->
                                     <div v-for="author in record.authors" :key="author.id">
