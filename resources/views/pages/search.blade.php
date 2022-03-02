@@ -115,6 +115,8 @@ if (!isset($_REQUEST['isPartOf_name'])) {
                                     <h5 class="card-title"><a :href="'creativework/' + record.id ">@{{ record.name }} (@{{ record.datePublished }})</a></h5>
                                     <p class="card-text">@{{ record.type }}</p>
                                     <p class="card-text">@{{ record.isPartOf_name }}</p>
+                                    <p class="card-text">Volume: @{{ record.isPartOf_volumeNumber }}</p>
+                                    <p class="card-text">Fascículo: @{{ record.isPartOf_issueNumber }}</p>
                                     <p class="card-text"><small class="text-muted"><a :href="'https://doi.org/' + record.doi">@{{ record.doi }}</a></small></p>
                                     <p class="card-text"><small class="text-muted">@{{ record.url }}</small></p>
                                     <!-- <p class="card-text">@{{ record.authors }}</p> -->
