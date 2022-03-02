@@ -27,8 +27,8 @@ class CreativeWorkController extends Controller
         if ($request->type) {
             $query->where('type', $request->type);
         }
-        if ($request->countryOfOrigin) {
-            $query->where('countryOfOrigin', $request->countryOfOrigin);
+        if ($request->educationEvent_name) {
+            $query->where('educationEvent_name', $request->educationEvent_name);
         }
         if ($request->inLanguage) {
             $query->where('inLanguage', $request->inLanguage);
@@ -55,8 +55,8 @@ class CreativeWorkController extends Controller
         if ($request->type) {
             $query->where('type', $request->type);
         }
-        if ($request->countryOfOrigin) {
-            $query->where('countryOfOrigin', $request->countryOfOrigin);
+        if ($request->educationEvent_name) {
+            $query->where('educationEvent_name', $request->educationEvent_name);
         }
 
         if ($request->inLanguage) {

@@ -18,7 +18,9 @@ class CreateCreativeWorksTable extends Migration
             $table->string('countryOfOrigin')->nullable();
             $table->string('datePublished')->nullable(); 
             $table->string('doi')->nullable();
+            $table->string('educationEvent_name')->nullable();
             $table->string('inLanguage')->nullable();
+            $table->string('isPartOf_isbn')->nullable();
             $table->string('isPartOf_issn')->nullable();
             $table->string('isPartOf_issueNumber')->nullable();
             $table->string('isPartOf_name')->nullable();
@@ -28,6 +30,8 @@ class CreateCreativeWorksTable extends Migration
             $table->string('name');
             $table->string('pageEnd')->nullable();
             $table->string('pageStart')->nullable();
+            $table->string('publisher_organization_location')->nullable();
+            $table->string('publisher_organization_name')->nullable();
             $table->string('record_source');
             $table->string('type');
             $table->string('type_schema_org');

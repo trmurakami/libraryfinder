@@ -95,12 +95,23 @@ class ImportLattesXMLController extends Controller
                             'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DO-EVENTO"],
                             'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-TRABALHO"],
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
+                            'educationEvent_name' => $detalhamentoDoTrabalho['@attributes']["NOME-DO-EVENTO"],
                             'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
+                            'isPartOf_isbn' => $detalhamentoDoTrabalho['@attributes']["ISBN"],
+                            'isPartOf_issueNumber' => $detalhamentoDoTrabalho['@attributes']["FASCICULO"],
+                            'isPartOf_serieNumber' => $detalhamentoDoTrabalho['@attributes']["SERIE"],
+                            'isPartOf_name' => $detalhamentoDoTrabalho['@attributes']["TITULO-DOS-ANAIS-OU-PROCEEDINGS"],
+                            'isPartOf_volumeNumber' => $detalhamentoDoTrabalho['@attributes']["VOLUME"],
+                            'locationCreated' => $detalhamentoDoTrabalho['@attributes']["CIDADE-DO-EVENTO"],
                             'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
+                            'pageEnd' => $detalhamentoDoTrabalho['@attributes']["PAGINA-FINAL"],
+                            'pageStart' => $detalhamentoDoTrabalho['@attributes']["PAGINA-INICIAL"],
+                            'publisher_organization_location' => $detalhamentoDoTrabalho['@attributes']["CIDADE-DA-EDITORA"],
+                            'publisher_organization_name' => $detalhamentoDoTrabalho['@attributes']["NOME-DA-EDITORA"],
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Trabalho apresentado em evento',
                             'type_schema_org' => 'ScholarlyArticle',
-                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]                       
+                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {
@@ -108,6 +119,7 @@ class ImportLattesXMLController extends Controller
                     }
                 }
             }
+
             if (isset($cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'ARTIGOS-PUBLICADOS'})) {
                 $records = $cv->{'PRODUCAO-BIBLIOGRAFICA'}->{'ARTIGOS-PUBLICADOS'}->{'ARTIGO-PUBLICADO'};
                 foreach ($records as $obra) {
@@ -132,7 +144,7 @@ class ImportLattesXMLController extends Controller
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Artigo publicado',
                             'type_schema_org' => 'ScholarlyArticle',
-                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]                            
+                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {

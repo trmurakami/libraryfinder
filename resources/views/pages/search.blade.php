@@ -24,8 +24,8 @@ if (!isset($_REQUEST['type'])) {
     $_REQUEST['type'] = '';
 }
 
-if (!isset($_REQUEST['countryOfOrigin'])) {
-    $_REQUEST['countryOfOrigin'] = '';
+if (!isset($_REQUEST['educationEvent_name'])) {
+    $_REQUEST['educationEvent_name'] = '';
 }
 
 if (!isset($_REQUEST['inLanguage'])) {
@@ -116,6 +116,7 @@ if (!isset($_REQUEST['isPartOf_name'])) {
                                     <p class="card-text">@{{ record.type }}</p>
                                     <p class="card-text">@{{ record.isPartOf_name }}, v. @{{ record.isPartOf_volumeNumber }}</p>
                                     <p class="card-text">Fascículo: @{{ record.isPartOf_issueNumber }}</p>
+                                    <p class="card-text">Série: @{{ record.isPartOf_serieNumber }}</p>
                                     <p class="card-text"><small class="text-muted"><a :href="'https://doi.org/' + record.doi">@{{ record.doi }}</a></small></p>
                                     <p class="card-text"><small class="text-muted">@{{ record.url }}</small></p>
                                     <!-- <p class="card-text">@{{ record.authors }}</p> -->
@@ -170,15 +171,15 @@ if (!isset($_REQUEST['isPartOf_name'])) {
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                País do evento
+                                Evento
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <ul class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="countryOfOrigin in facets.countryOfOrigin" :key="countryOfOrigin.countryOfOrigin">
-                                        <a :href="currentURL + '&countryOfOrigin=' + countryOfOrigin.countryOfOrigin">@{{ countryOfOrigin.countryOfOrigin }}</a>
-                                        <span class="badge bg-primary rounded-pill">@{{ countryOfOrigin.total }}</span>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="educationEvent_name in facets.educationEvent_name" :key="educationEvent_name.educationEvent_name">
+                                        <a :href="currentURL + '&educationEvent_name=' + educationEvent_name.educationEvent_name">@{{ educationEvent_name.educationEvent_name }}</a>
+                                        <span class="badge bg-primary rounded-pill">@{{ educationEvent_name.total }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -219,14 +220,14 @@ if (!isset($_REQUEST['isPartOf_name'])) {
             currentURL: null,
             errored: false,
             facets: {
-                countryOfOrigin: null,
+                educationEvent_name: null,
                 inLanguage: null,
                 isPartOf_name: null,
                 type: null
             },
             response: null,
             request: {
-                countryOfOrigin: <?php echo "'" . $_REQUEST['countryOfOrigin'] . "'" ?>,
+                educationEvent_name: <?php echo "'" . $_REQUEST['educationEvent_name'] . "'" ?>,
                 inLanguage: <?php echo "'" . $_REQUEST['inLanguage'] . "'" ?>,
                 isPartOf_name: <?php echo "'" . $_REQUEST['isPartOf_name'] . "'" ?>,
                 page: <?php echo "'" . $_REQUEST['page'] . "'" ?>,
@@ -236,7 +237,7 @@ if (!isset($_REQUEST['isPartOf_name'])) {
         },
         mounted: function() {
             this.getAllData();
-            this.facetSimple('countryOfOrigin');
+            this.facetSimple('educationEvent_name');
             this.facetSimple('type');
             this.facetSimple('inLanguage');
             this.facetSimple('isPartOf_name');
@@ -254,7 +255,7 @@ if (!isset($_REQUEST['isPartOf_name'])) {
                             '&search=' + 
                             this.request.search + 
                             (this.request.type ? '&type=' + this.request.type : '') +
-                            (this.request.countryOfOrigin ? '&countryOfOrigin=' + this.request.countryOfOrigin : '') +
+                            (this.request.educationEvent_name ? '&educationEvent_name=' + this.request.educationEvent_name : '') +
                             (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '') +
                             (this.request.isPartOf_name ? '&isPartOf_name=' + this.request.isPartOf_name : '')
                         )
@@ -284,7 +285,7 @@ if (!isset($_REQUEST['isPartOf_name'])) {
                             '&search=' + 
                             this.request.search + 
                             (this.request.type ? '&type=' + this.request.type : '') +
-                            (this.request.countryOfOrigin ? '&countryOfOrigin=' + this.request.countryOfOrigin : '') +
+                            (this.request.educationEvent_name ? '&educationEvent_name=' + this.request.educationEvent_name : '') +
                             (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '') +
                             (this.request.isPartOf_name ? '&isPartOf_name=' + this.request.isPartOf_name : '')
                         )
