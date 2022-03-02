@@ -120,12 +120,19 @@ class ImportLattesXMLController extends Controller
                             'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"],
                             'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
                             'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
+                            'isPartOf_issn' => $detalhamentoDoTrabalho['@attributes']["ISSN"],
+                            'isPartOf_name' => $detalhamentoDoTrabalho['@attributes']["TITULO-DO-PERIODICO-OU-REVISTA"],
+                            'isPartOf_issueNumber' => $detalhamentoDoTrabalho['@attributes']["FASCICULO"],
+                            'isPartOf_serieNumber' => $detalhamentoDoTrabalho['@attributes']["SERIE"],
+                            'isPartOf_volumeNumber' => $detalhamentoDoTrabalho['@attributes']["VOLUME"],
+                            'locationCreated' => $detalhamentoDoTrabalho['@attributes']["LOCAL-DE-PUBLICACAO"],
                             'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
+                            'pageEnd' => $detalhamentoDoTrabalho['@attributes']["PAGINA-FINAL"],
+                            'pageStart' => $detalhamentoDoTrabalho['@attributes']["PAGINA-INICIAL"],
                             'record_source' => 'Currículo Lattes',
                             'type' => 'Artigo publicado',
                             'type_schema_org' => 'ScholarlyArticle',
-                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
-                            
+                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]                            
                         ]
                     );
                     if (!empty($obra["AUTORES"])) {

@@ -34,6 +34,10 @@ class CreativeWorkController extends Controller
             $query->where('inLanguage', $request->inLanguage);
         }
 
+        if ($request->isPartOf_name) {
+            $query->where('isPartOf_name', $request->isPartOf_name);
+        }
+
         $creative_works = $query->orderBy('datePublished', 'desc')->paginate($request->per_page)->appends(request()->query());
         return $creative_works;
     }
@@ -57,6 +61,10 @@ class CreativeWorkController extends Controller
 
         if ($request->inLanguage) {
             $query->where('inLanguage', $request->inLanguage);
+        }
+
+        if ($request->isPartOf_name) {
+            $query->where('isPartOf_name', $request->isPartOf_name);
         }
 
         $facets = $query->groupBy($request->field)->orderBy('total', 'desc')->get();

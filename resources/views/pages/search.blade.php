@@ -32,6 +32,10 @@ if (!isset($_REQUEST['inLanguage'])) {
     $_REQUEST['inLanguage'] = '';
 }
 
+if (!isset($_REQUEST['isPartOf_name'])) {
+    $_REQUEST['isPartOf_name'] = '';
+}
+
 
 ?>
 
@@ -110,6 +114,7 @@ if (!isset($_REQUEST['inLanguage'])) {
                                 <div class="card-body">
                                     <h5 class="card-title"><a :href="'creativework/' + record.id ">@{{ record.name }} (@{{ record.datePublished }})</a></h5>
                                     <p class="card-text">@{{ record.type }}</p>
+                                    <p class="card-text">@{{ record.isPartOf_name }}</p>
                                     <p class="card-text"><small class="text-muted"><a :href="'https://doi.org/' + record.doi">@{{ record.doi }}</a></small></p>
                                     <p class="card-text"><small class="text-muted">@{{ record.url }}</small></p>
                                     <!-- <p class="card-text">@{{ record.authors }}</p> -->
@@ -178,6 +183,23 @@ if (!isset($_REQUEST['inLanguage'])) {
                             </div>
                         </div>
                     </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Periódico
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="isPartOf_name in facets.isPartOf_name" :key="isPartOf_name.isPartOf_name">
+                                        <a :href="currentURL + '&isPartOf_name=' + isPartOf_name.isPartOf_name">@{{ isPartOf_name.isPartOf_name }}</a>
+                                        <span class="badge bg-primary rounded-pill">@{{ isPartOf_name.total }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,12 +220,14 @@ if (!isset($_REQUEST['inLanguage'])) {
             facets: {
                 countryOfOrigin: null,
                 inLanguage: null,
+                isPartOf_name: null,
                 type: null
             },
             response: null,
             request: {
                 countryOfOrigin: <?php echo "'" . $_REQUEST['countryOfOrigin'] . "'" ?>,
                 inLanguage: <?php echo "'" . $_REQUEST['inLanguage'] . "'" ?>,
+                isPartOf_name: <?php echo "'" . $_REQUEST['isPartOf_name'] . "'" ?>,
                 page: <?php echo "'" . $_REQUEST['page'] . "'" ?>,
                 search: <?php echo "'" . $_REQUEST['search'] . "'" ?>,
                 type: <?php echo "'" . $_REQUEST['type'] . "'" ?>
@@ -214,6 +238,7 @@ if (!isset($_REQUEST['inLanguage'])) {
             this.facetSimple('countryOfOrigin');
             this.facetSimple('type');
             this.facetSimple('inLanguage');
+            this.facetSimple('isPartOf_name');
             if (window.location.href.includes("\?")) {
                 this.currentURL = window.location.href;
             } else {
@@ -229,7 +254,8 @@ if (!isset($_REQUEST['inLanguage'])) {
                             this.request.search + 
                             (this.request.type ? '&type=' + this.request.type : '') +
                             (this.request.countryOfOrigin ? '&countryOfOrigin=' + this.request.countryOfOrigin : '') +
-                            (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '')
+                            (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '') +
+                            (this.request.isPartOf_name ? '&isPartOf_name=' + this.request.isPartOf_name : '')
                         )
                     .then((response) => {
                         this.response = response;
@@ -258,7 +284,8 @@ if (!isset($_REQUEST['inLanguage'])) {
                             this.request.search + 
                             (this.request.type ? '&type=' + this.request.type : '') +
                             (this.request.countryOfOrigin ? '&countryOfOrigin=' + this.request.countryOfOrigin : '') +
-                            (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '')
+                            (this.request.inLanguage ? '&inLanguage=' + this.request.inLanguage : '') +
+                            (this.request.isPartOf_name ? '&isPartOf_name=' + this.request.isPartOf_name : '')
                         )
                     .then((response) => {
                         this.facets[field] = response.data;
