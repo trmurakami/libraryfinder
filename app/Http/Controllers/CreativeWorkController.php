@@ -174,9 +174,9 @@ class CreativeWorkController extends Controller
         if ($record['@attributes']["DOI"] != '') {
             $creative_work = CreativeWork::where('doi', $record['@attributes']["DOI"])->get();
         } elseif (isset($record['@attributes']["TITULO-DO-TRABALHO"])) {
-            $creative_work = CreativeWork::where('name', 'LIKE',  '%' . $record['@attributes']["TITULO-DO-TRABALHO"] . '%')->get();
+            $creative_work = CreativeWork::where('name', $record['@attributes']["TITULO-DO-TRABALHO"])->get();
         } elseif (isset($record['@attributes']["TITULO-DO-ARTIGO"])) {
-            $creative_work = CreativeWork::where('name', 'LIKE',  '%' . $record['@attributes']["TITULO-DO-ARTIGO"] . '%')->get();
+            $creative_work = CreativeWork::where('name', $record['@attributes']["TITULO-DO-ARTIGO"])->get();
         }
         return json_encode($creative_work, true);
     }
