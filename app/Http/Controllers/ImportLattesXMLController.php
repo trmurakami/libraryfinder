@@ -90,32 +90,39 @@ class ImportLattesXMLController extends Controller
                     $obra = get_object_vars($obra);
                     $dadosBasicosDoTrabalho = get_object_vars($obra["DADOS-BASICOS-DO-TRABALHO"]);
                     $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-TRABALHO"]);
-                    $id = DB::table('creative_works')->insertGetId(
-                        [
-                            'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DO-EVENTO"],
-                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-TRABALHO"],
-                            'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
-                            'educationEvent_name' => $detalhamentoDoTrabalho['@attributes']["NOME-DO-EVENTO"],
-                            'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
-                            'isPartOf_isbn' => $detalhamentoDoTrabalho['@attributes']["ISBN"],
-                            'isPartOf_issueNumber' => $detalhamentoDoTrabalho['@attributes']["FASCICULO"],
-                            'isPartOf_serieNumber' => $detalhamentoDoTrabalho['@attributes']["SERIE"],
-                            'isPartOf_name' => $detalhamentoDoTrabalho['@attributes']["TITULO-DOS-ANAIS-OU-PROCEEDINGS"],
-                            'isPartOf_volumeNumber' => $detalhamentoDoTrabalho['@attributes']["VOLUME"],
-                            'locationCreated' => $detalhamentoDoTrabalho['@attributes']["CIDADE-DO-EVENTO"],
-                            'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
-                            'pageEnd' => $detalhamentoDoTrabalho['@attributes']["PAGINA-FINAL"],
-                            'pageStart' => $detalhamentoDoTrabalho['@attributes']["PAGINA-INICIAL"],
-                            'publisher_organization_location' => $detalhamentoDoTrabalho['@attributes']["CIDADE-DA-EDITORA"],
-                            'publisher_organization_name' => $detalhamentoDoTrabalho['@attributes']["NOME-DA-EDITORA"],
-                            'record_source' => 'Currículo Lattes',
-                            'type' => 'Trabalho apresentado em evento',
-                            'type_schema_org' => 'ScholarlyArticle',
-                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
-                        ]
-                    );
-                    if (!empty($obra["AUTORES"])) {
-                        $this->processAuthorsLattes($obra["AUTORES"], $id);
+
+                    $creative_work = new CreativeWorkController;
+                    $result_cw_query = $creative_work->dedup($dadosBasicosDoTrabalho);
+
+                    if (count(json_decode($result_cw_query)) == 0) {
+
+                        $id = DB::table('creative_works')->insertGetId(
+                            [
+                                'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DO-EVENTO"],
+                                'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-TRABALHO"],
+                                'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
+                                'educationEvent_name' => $detalhamentoDoTrabalho['@attributes']["NOME-DO-EVENTO"],
+                                'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
+                                'isPartOf_isbn' => $detalhamentoDoTrabalho['@attributes']["ISBN"],
+                                'isPartOf_issueNumber' => $detalhamentoDoTrabalho['@attributes']["FASCICULO"],
+                                'isPartOf_serieNumber' => $detalhamentoDoTrabalho['@attributes']["SERIE"],
+                                'isPartOf_name' => $detalhamentoDoTrabalho['@attributes']["TITULO-DOS-ANAIS-OU-PROCEEDINGS"],
+                                'isPartOf_volumeNumber' => $detalhamentoDoTrabalho['@attributes']["VOLUME"],
+                                'locationCreated' => $detalhamentoDoTrabalho['@attributes']["CIDADE-DO-EVENTO"],
+                                'name' => $dadosBasicosDoTrabalho['@attributes']["TITULO-DO-TRABALHO"],
+                                'pageEnd' => $detalhamentoDoTrabalho['@attributes']["PAGINA-FINAL"],
+                                'pageStart' => $detalhamentoDoTrabalho['@attributes']["PAGINA-INICIAL"],
+                                'publisher_organization_location' => $detalhamentoDoTrabalho['@attributes']["CIDADE-DA-EDITORA"],
+                                'publisher_organization_name' => $detalhamentoDoTrabalho['@attributes']["NOME-DA-EDITORA"],
+                                'record_source' => 'Currículo Lattes',
+                                'type' => 'Trabalho apresentado em evento',
+                                'type_schema_org' => 'ScholarlyArticle',
+                                'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
+                            ]
+                        );
+                        if (!empty($obra["AUTORES"])) {
+                            $this->processAuthorsLattes($obra["AUTORES"], $id);
+                        }
                     }
                 }
             }
@@ -126,29 +133,37 @@ class ImportLattesXMLController extends Controller
                     $obra = get_object_vars($obra);
                     $dadosBasicosDoTrabalho = get_object_vars($obra["DADOS-BASICOS-DO-ARTIGO"]);
                     $detalhamentoDoTrabalho = get_object_vars($obra["DETALHAMENTO-DO-ARTIGO"]);
-                    $id = DB::table('creative_works')->insertGetId(
-                        [
-                            'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DE-PUBLICACAO"],
-                            'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"],
-                            'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
-                            'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
-                            'isPartOf_issn' => $detalhamentoDoTrabalho['@attributes']["ISSN"],
-                            'isPartOf_name' => $detalhamentoDoTrabalho['@attributes']["TITULO-DO-PERIODICO-OU-REVISTA"],
-                            'isPartOf_issueNumber' => $detalhamentoDoTrabalho['@attributes']["FASCICULO"],
-                            'isPartOf_serieNumber' => $detalhamentoDoTrabalho['@attributes']["SERIE"],
-                            'isPartOf_volumeNumber' => $detalhamentoDoTrabalho['@attributes']["VOLUME"],
-                            'locationCreated' => $detalhamentoDoTrabalho['@attributes']["LOCAL-DE-PUBLICACAO"],
-                            'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
-                            'pageEnd' => $detalhamentoDoTrabalho['@attributes']["PAGINA-FINAL"],
-                            'pageStart' => $detalhamentoDoTrabalho['@attributes']["PAGINA-INICIAL"],
-                            'record_source' => 'Currículo Lattes',
-                            'type' => 'Artigo publicado',
-                            'type_schema_org' => 'ScholarlyArticle',
-                            'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
-                        ]
-                    );
-                    if (!empty($obra["AUTORES"])) {
-                        $this->processAuthorsLattes($obra["AUTORES"], $id);
+
+                    $creative_work = new CreativeWorkController;
+                    $result_cw_query = $creative_work->dedup($dadosBasicosDoTrabalho);
+
+                    if (count(json_decode($result_cw_query)) == 0) {
+
+                        $id = DB::table('creative_works')->insertGetId(
+                            [
+                                'countryOfOrigin' => $dadosBasicosDoTrabalho['@attributes']["PAIS-DE-PUBLICACAO"],
+                                'datePublished' => $dadosBasicosDoTrabalho['@attributes']["ANO-DO-ARTIGO"],
+                                'doi' => $dadosBasicosDoTrabalho['@attributes']["DOI"],
+                                'inLanguage' => $dadosBasicosDoTrabalho['@attributes']["IDIOMA"],
+                                'isPartOf_issn' => $detalhamentoDoTrabalho['@attributes']["ISSN"],
+                                'isPartOf_name' => $detalhamentoDoTrabalho['@attributes']["TITULO-DO-PERIODICO-OU-REVISTA"],
+                                'isPartOf_issueNumber' => $detalhamentoDoTrabalho['@attributes']["FASCICULO"],
+                                'isPartOf_serieNumber' => $detalhamentoDoTrabalho['@attributes']["SERIE"],
+                                'isPartOf_volumeNumber' => $detalhamentoDoTrabalho['@attributes']["VOLUME"],
+                                'locationCreated' => $detalhamentoDoTrabalho['@attributes']["LOCAL-DE-PUBLICACAO"],
+                                'name' => strip_tags($dadosBasicosDoTrabalho['@attributes']["TITULO-DO-ARTIGO"]),
+                                'pageEnd' => $detalhamentoDoTrabalho['@attributes']["PAGINA-FINAL"],
+                                'pageStart' => $detalhamentoDoTrabalho['@attributes']["PAGINA-INICIAL"],
+                                'record_source' => 'Currículo Lattes',
+                                'type' => 'Artigo publicado',
+                                'type_schema_org' => 'ScholarlyArticle',
+                                'url' => $dadosBasicosDoTrabalho['@attributes']["HOME-PAGE-DO-TRABALHO"]
+                            ]
+                        );
+                        if (!empty($obra["AUTORES"])) {
+                            $this->processAuthorsLattes($obra["AUTORES"], $id);
+                        }
+                        
                     }
                 }
             }

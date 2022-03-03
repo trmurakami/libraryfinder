@@ -47,7 +47,7 @@ if (!isset($_REQUEST['isPartOf_name'])) {
 
                 <!-- Pagination -->
                 <nav aria-label="Page navigation">
-                    <p>Você pesquisou por: {{ \Request::get('search') }}</p>
+                    <p>Total de resultados: @{{ response.data.total }}. Você pesquisou por: {{ \Request::get('search') }}</p>
                     <ul class="pagination justify-content-center m-3">
                         <li class="page-item">
                             <a class="page-link" @click="searchANDPaginate(response.data.first_page_url)">Primeira</a>
