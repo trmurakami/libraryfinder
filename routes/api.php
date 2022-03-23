@@ -7,6 +7,7 @@ use App\Http\Controllers\CreativeWorkController;
 use App\Http\Controllers\ImportLattesXMLController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\CoverController;
+use App\Http\Controllers\Z3950Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,5 @@ Route::prefix('facets')->group(
 );
 
 Route::get('cover', [CoverController::class, 'show']);
+
+Route::get('z3950', [Z3950Controller::class, 'searchZ3950']);
